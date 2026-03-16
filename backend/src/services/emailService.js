@@ -19,7 +19,7 @@ const sendComplaintConfirmation = async (email, complaintId, title) => {
     await transporter.sendMail({
       from: `"University Complaint System" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: `Complaint Submitted Successfully - #${complaintId.slice(0, 8).toUpperCase()}`,
+      subject: `Complaint Submitted Successfully - #${String(complaintId).slice(0, 8).toUpperCase()}`,
       html: `
         <h2>Complaint Received</h2>
         <p>Your complaint has been submitted successfully.</p>

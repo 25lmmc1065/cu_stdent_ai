@@ -112,4 +112,8 @@ INSERT INTO departments (name, code, head_name, head_email, description) VALUES
   ('Health Services', 'HEALTH', 'Dr. Jennifer White', 'health@university.edu', 'Provides medical and health services'),
   ('Canteen & Food Services', 'CANTEEN', 'Mr. Charles Harris', 'canteen@university.edu', 'Manages food services and canteen operations'),
   ('Administration', 'ADMIN', 'Ms. Patricia Clark', 'admin@university.edu', 'General administrative services')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT (name) DO UPDATE SET
+  code = EXCLUDED.code,
+  head_name = EXCLUDED.head_name,
+  head_email = EXCLUDED.head_email,
+  description = EXCLUDED.description;

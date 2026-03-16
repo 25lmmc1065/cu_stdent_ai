@@ -196,14 +196,14 @@ const updateStatus = async (req, res, next) => {
       return res.status(404).json({ error: 'Complaint not found' });
     }
 
-    const resolvedAt = status === 'resolved' ? 'NOW()' : 'NULL';
+    const resolvedAt = status === 'resolved' ? new Date() : null;
     const result = await query(
       `UPDATE complaints
        SET status = $1, department_response = COALESCE($2, department_response),
-           updated_at = NOW(), resolved_at = ${resolvedAt}
-       WHERE id = $3
+           updated_at = NOW(), resolved_at = $3
+       WHERE id = $4
        RETURNING *`,
-      [status, response || null, req.params.id]
+      [status, response || null, resolvedAt, req.params.id]
     );
 
     const complaint = result.rows[0];
